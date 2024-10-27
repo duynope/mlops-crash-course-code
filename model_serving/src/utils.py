@@ -26,6 +26,7 @@ class AppPath:
     DATA_SOURCES = ROOT / "data_sources"
     FEATURE_REPO = ROOT / "feature_repo"
     ARTIFACTS = ROOT / "artifacts"
+    print(DATA_SOURCES)
 
     BATCH_INPUT_PQ = ARTIFACTS / "batch_input.parquet"
     BATCH_OUTPUT_PQ = ARTIFACTS / "batch_output.parquet"

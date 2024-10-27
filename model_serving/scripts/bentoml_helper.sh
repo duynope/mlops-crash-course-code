@@ -19,6 +19,9 @@ fi
 
 serve() {
     cd src
+    export MLFLOW_TRACKING_URI=http://mlflow-mlflow-1:5000
+    # In ra các tham số dòng lệnh đã truyền
+    echo "Running bentoml serve with the following options: $@"
     bentoml serve bentoml_service:svc "$@"
 }
 

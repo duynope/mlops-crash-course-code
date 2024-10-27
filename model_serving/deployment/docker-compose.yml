@@ -9,4 +9,19 @@ services:
       - ../feature_repo:/model_serving/feature_repo
     command: /bin/bash scripts/bentoml_helper.sh serve --port=$ONLINE_SERVING_PORT
     ports:
-      - $ONLINE_SERVING_PORT:$ONLINE_SERVING_PORT
+      - "8172:8172" 
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow-mlflow-1:5000 
+      - MONITORING_SERVICE_API=http://172.21.0.3:8309/iterate
+    networks:
+      - mlflow_default
+      - feast_default  
+      - monitoring
+
+networks:
+  mlflow_default:
+    external: true
+  feast_default:
+    external: true
+  monitoring: 
+    external: true

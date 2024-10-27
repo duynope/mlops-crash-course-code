@@ -1,12 +1,22 @@
 version: "3.7"
 services:
   monitoring:
-    image: $DOCKER_USER/mlops_crash_course/monitoring_service:latest
+    image: "${DOCKER_USER}/mlops_crash_course/monitoring_service:latest"
     container_name: monitoring_service
     restart: on-failure
     volumes:
       - ../data:/monitoring_service/data
       - ../data_sources:/monitoring_service/data_sources
-    command: python src/monitoring_service.py --port=$MONITORING_SERVICE_PORT
+    command: python src/monitoring_service.py --port=${MONITORING_SERVICE_PORT}
     ports:
-      - $MONITORING_SERVICE_PORT:$MONITORING_SERVICE_PORT
+      - 8309:8309
+    environment:
+      - DOCKER_USER=mlopsvn
+      - MONITORING_SERVICE_PORT=8309  # hoặc giá trị bạn muốn
+
+    networks:
+      - monitoring  # Kết nối với mạng monitoring
+
+networks:
+  monitoring:  # Định nghĩa mạng
+    external: true  # Chỉ định mạng này là mạng bên ngoài

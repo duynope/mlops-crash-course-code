@@ -31,7 +31,7 @@ def batch_prediction():
     # restructure features
     model_signature: ModelSignature = mlflow_model.metadata.signature
     feature_list = []
-    for name in model_signature.inputs.input_names():
+    for name in model_signature.inputs.input_names(): 
         feature_list.append(name)
     Log().log.info(f"feature_list: {feature_list}")
 

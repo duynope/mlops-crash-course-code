@@ -134,19 +134,31 @@ class MonitoringService:
 
         self.next_run = datetime.now() + timedelta(seconds=self.RUN_PERIOD_SEC)
         return True
-
     def _execute_monitoring(self):
         Log().log.info("_execute_monitoring")
-        self.features_and_target_monitor.execute(
-            self.reference_data,
-            self.current_data,
-            self.column_mapping,
-        )
-        self.model_performance_monitor.execute(
-            self.current_data,
-            self.current_data,
-            self.column_mapping,
-        )
+        try:
+            self.features_and_target_monitor.execute(
+                self.reference_data,
+                self.current_data,
+                self.column_mapping,
+            )
+            Log().log.info("Features and target monitoring executed successfully.")
+        except Exception as e:
+            Log().log.error(f"Error executing features and target monitoring: {e}")
+
+        try:
+            self.model_performance_monitor.execute(
+                self.current_data,
+                self.current_data,
+                self.column_mapping,
+            )
+            Log().log.info("Model performance monitoring executed successfully.")
+        except Exception as e:
+            Log().log.error(f"Error executing model performance monitoring: {e}")
+
+        Log().log.info("Metrics from features and target monitor: %s", self.features_and_target_monitor.metrics())
+
+
 
     def _process_metrics(self, evidently_metrics):
         for metric, value, labels in evidently_metrics:
