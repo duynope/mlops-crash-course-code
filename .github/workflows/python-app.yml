@@ -1,0 +1,58 @@
+name: Data Pipeline Workflow
+
+# Sự kiện kích hoạt workflow khi có push hoặc pull request vào branch chính
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build_data_pipeline:
+    # Chạy job trên môi trường Ubuntu với Docker
+    runs-on: ubuntu-latest
+    container:
+      image: python:3.9
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build data pipeline
+        if: github.event_name == 'push' || github.event_name == 'pull_request'
+        working-directory: data_pipeline
+        run: |
+          echo "Building data pipeline.."
+          make build_image
+
+  test_data_pipeline:
+    runs-on: ubuntu-latest
+    container:
+      image: python:3.9
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Test data pipeline
+        if: github.event_name == 'push' || github.event_name == 'pull_request'
+        run: |
+          echo "Testing data pipeline.."
+          # Bạn có thể thêm lệnh test tại đây, ví dụ `make test` nếu có
+
+  deploy_data_pipeline:
+    runs-on: ubuntu-latest
+    container:
+      image: python:3.9
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Deploy data pipeline
+        if: github.event_name == 'push' || github.event_name == 'pull_request'
+        working-directory: data_pipeline
+        run: |
+          make deploy_dags
