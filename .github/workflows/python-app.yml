@@ -13,12 +13,17 @@ jobs:
   build_data_pipeline:
     # Chạy job trên môi trường Ubuntu với Docker
     runs-on: ubuntu-latest
-    container:
-      image: python:3.9
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Set up Docker
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker.io
+          sudo systemctl start docker
+          sudo systemctl enable docker
 
       - name: Build data pipeline
         if: github.event_name == 'push' || github.event_name == 'pull_request'
@@ -29,12 +34,17 @@ jobs:
 
   test_data_pipeline:
     runs-on: ubuntu-latest
-    container:
-      image: python:3.9
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Set up Docker
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker.io
+          sudo systemctl start docker
+          sudo systemctl enable docker
 
       - name: Test data pipeline
         if: github.event_name == 'push' || github.event_name == 'pull_request'
@@ -44,12 +54,17 @@ jobs:
 
   deploy_data_pipeline:
     runs-on: ubuntu-latest
-    container:
-      image: python:3.9
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Set up Docker
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker.io
+          sudo systemctl start docker
+          sudo systemctl enable docker
 
       - name: Deploy data pipeline
         if: github.event_name == 'push' || github.event_name == 'pull_request'
