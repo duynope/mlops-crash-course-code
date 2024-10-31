@@ -144,7 +144,6 @@ def monitor_request(df: pd.DataFrame):
     try:
         #data = json.dumps(df.to_dict(), cls=NumpyEncoder)
         data = json.dumps(df.to_dict(orient='records'), cls=NumpyEncoder)
-        print(f"GIA TRI DATA {data}")
         Log().log.info(f"sending {data}")
         response = requests.post(
             config.monitoring_service_api,
