@@ -1,6 +1,5 @@
 name: Data Pipeline Workflow
 
-# Sự kiện kích hoạt workflow khi có push hoặc pull request vào branch chính
 on:
   push:
     branches:
@@ -10,76 +9,62 @@ on:
       - main
 
 jobs:
-  build_data_pipeline:
-    # Chạy job trên môi trường Ubuntu với Docker
+  setup_environment:
     runs-on: ubuntu-latest
+    container:
+      image: ubuntu:20.04
+      options: --user=root
+
+    steps:
+      - name: Install Python 3.9 and Docker
+        run: |
+          apt-get update
+          apt-get install -y python3.9 python3.9-distutils python3-pip apt-transport-https ca-certificates curl software-properties-common
+          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+          add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+          apt-get update
+          apt-get install -y docker-ce docker-ce-cli containerd.io
+          python3.9 -m pip install --upgrade pip
+          ln -sf /usr/bin/python3.9 /usr/bin/python
+
+  build_data_pipeline:
+    needs: setup_environment
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:20.04
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Set up Docker
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
-          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-          sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
-          sudo apt-get update
-          sudo apt-get install -y docker-ce docker-ce-cli containerd.io
-          sudo systemctl start docker
-          sudo systemctl enable docker
-
       - name: Build data pipeline
-        if: github.event_name == 'push' || github.event_name == 'pull_request'
         working-directory: data_pipeline
         run: |
           echo "Building data pipeline.."
           make build_image
 
   test_data_pipeline:
+    needs: setup_environment
     runs-on: ubuntu-latest
+    container:
+      image: ubuntu:20.04
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Set up Docker
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
-          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-          sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
-          sudo apt-get update
-          sudo apt-get install -y docker-ce docker-ce-cli containerd.io
-          sudo systemctl start docker
-          sudo systemctl enable docker
-
       - name: Test data pipeline
-        if: github.event_name == 'push' || github.event_name == 'pull_request'
         run: |
           echo "Testing data pipeline.."
-          # Bạn có thể thêm lệnh test tại đây, ví dụ `make test` nếu có
 
   deploy_data_pipeline:
+    needs: setup_environment
     runs-on: ubuntu-latest
+    container:
+      image: ubuntu:20.04
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Set up Docker
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
-          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-          sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
-          sudo apt-get update
-          sudo apt-get install -y docker-ce docker-ce-cli containerd.io
-          sudo systemctl start docker
-          sudo systemctl enable docker
-
       - name: Deploy data pipeline
-        if: github.event_name == 'push' || github.event_name == 'pull_request'
         working-directory: data_pipeline
         run: |
           make deploy_dags
