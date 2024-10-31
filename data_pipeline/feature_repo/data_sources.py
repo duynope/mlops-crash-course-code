@@ -25,4 +25,3 @@ driver_stats_stream_source = KafkaSource(
     watermark_delay_threshold=timedelta(minutes=5),
     description="The Kafka stream containing the driver stats",
 )
-print("xin chào")
