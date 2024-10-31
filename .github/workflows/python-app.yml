@@ -137,3 +137,15 @@ jobs:
         working-directory: training_pipeline
         run: |
           make build_image
+  deploy_training_pipeline:
+    needs: setup_environment
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Deploy training pipeline
+        working-directory: training_pipeline
+        run: |
+          make deploy_dags
