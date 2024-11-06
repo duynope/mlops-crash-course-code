@@ -11,7 +11,6 @@ from pydantic import BaseModel
 
 from utils import *
 
-# Khởi tạo logging và cấu hình
 Log(AppConst.BENTOML_SERVICE)
 AppPath()
 pd.set_option("display.max_columns", None)
@@ -21,7 +20,6 @@ Log().log.info(f"config: {config.__dict__}")
 def save_model() -> bentoml.Model:
     Log().log.info("start save_model")
 
-    # Đọc file JSON chứa thông tin model đã đăng ký từ MLflow
     registered_model_file = AppPath.ROOT / config.registered_model_file
     Log().log.info(f"registered_model_file: {registered_model_file}")
     registered_model_dict = load_json(registered_model_file)
@@ -34,17 +32,13 @@ def save_model() -> bentoml.Model:
 
     mlflow.set_tracking_uri(config.mlflow_tracking_uri)
 
-    # Tải mô hình sklearn từ MLflow
     model = mlflow.sklearn.load_model(model_uri=model_uri)
 
-    # Lấy signature từ MLflow để truyền vào BentoML
     mlflow_model = mlflow.pyfunc.load_model(model_uri=model_uri)
     model_signature: ModelSignature = mlflow_model.metadata.signature
     Log().log.info(f"THONG TIN DATA: {model_signature}")
-    # Tạo danh sách các feature từ model signature
     feature_list = [name for name in model_signature.inputs.input_names()]
 
-    # Lưu mô hình với BentoML
     bentoml_model = bentoml.sklearn.save_model( 
         model_name,
         model,

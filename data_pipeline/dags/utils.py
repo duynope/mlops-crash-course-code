@@ -24,7 +24,7 @@ class DefaultConfig:
     DEFAULT_DOCKER_OPERATOR_ARGS = {
         "image": f"{AppConst.DOCKER_USER}/mlops_crash_course/data_pipeline:latest",
         "api_version": "auto",
-        "auto_remove": True,
+        "auto_remove": "success",
         "mounts": [
             # feature repo
             Mount(
@@ -35,5 +35,5 @@ class DefaultConfig:
         ],
         # Fix a permission denied when using DockerOperator in Airflow
         # Ref: https://stackoverflow.com/a/70100729
-        # "docker_url": "tcp://docker-proxy:2375",
+        "docker_url": "tcp://docker-proxy:2375",
     }

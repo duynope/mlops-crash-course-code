@@ -65,6 +65,18 @@ jobs:
           echo "Building data pipeline.."
           make build_image
 
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: duynope1803  # Sử dụng tên đăng nhập Docker Hub của bạn
+          password: ${{ secrets.DOCKER_PASSWORD }}  # Lấy token từ GitHub Secrets
+
+      - name: Build and push Docker image to Docker Hub
+        run: |
+          docker build -t duynope1803/data-pipeline:latest .
+          docker push duynope1803/data-pipeline:latest
+
+
   test_data_pipeline:
     needs: setup_environment
     runs-on: ubuntu-latest

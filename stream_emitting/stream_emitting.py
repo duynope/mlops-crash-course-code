@@ -61,7 +61,7 @@ def main(args):
             record["created"] = record["created"].strftime("%Y-%m-%d %H:%M:%S")
             producer.send(args.topic_name, json.dumps(record).encode())
             # sleep 5 seconds before continuing pushing events 
-            sleep(5)
+            sleep(2)
             logger.info(record)
         iteration += 1
 
