@@ -46,7 +46,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and Push Docker Image
-        working-directory: mlops-crash-course-code/data_pipeline/deployment
+        working-directory: data_pipeline/deployment
         run: |
           DOCKER_BUILDKIT=1 docker buildx build \
             --platform linux/amd64 \
