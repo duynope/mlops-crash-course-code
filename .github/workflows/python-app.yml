@@ -46,13 +46,14 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and Push Docker Image
-        working-directory: data_pipeline/deployment
         run: |
           DOCKER_BUILDKIT=1 docker buildx build \
             --platform linux/amd64 \
             --tag duynope1803/data-pipeline:latest \
             --push \
-            -f Dockerfile .
+            -f data_pipeline/deployment/Dockerfile .
+
+
 
   deploy_training_pipeline:
     needs: build_and_push_image
