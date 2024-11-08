@@ -16,29 +16,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Cache Docker layers
-        uses: actions/cache@v2
-        with:
-          path: /tmp/.docker
-          key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile') }}
-          restore-keys: |
-            ${{ runner.os }}-docker-
+      - name: Check Docker installation
+        run: docker --version
 
       - name: Enable Docker BuildKit
         run: |
-          echo '{"experimental": true, "features": {"buildkit": true}}' | sudo tee /etc/docker/daemon.json
-          sudo systemctl restart docker
-
-      - name: Set up Docker
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
-          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-          sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
-          sudo apt-get update
-          sudo apt-get install -y docker-ce docker-ce-cli containerd.io
-          sudo systemctl start docker
-          sudo systemctl enable docker
+          echo "DOCKER_BUILDKIT=1" >> $GITHUB_ENV
 
       - name: Cache Python packages
         uses: actions/cache@v2
@@ -49,6 +32,7 @@ jobs:
             ${{ runner.os }}-pip-
 
   build_and_push_image:
+    needs: setup_environment
     runs-on: ubuntu-latest
 
     steps:
@@ -58,13 +42,12 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: duynope1803
+          username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and Push Docker Image
         working-directory: data_pipeline/deployment
         run: |
-          echo $DOCKER_PASSWORD | docker login -u duynope1803 --password-stdin
           DOCKER_BUILDKIT=1 docker buildx build \
             --platform linux/amd64 \
             --tag duynope1803/data-pipeline:latest \
@@ -81,5 +64,8 @@ jobs:
 
       - name: Deploy training pipeline
         working-directory: training_pipeline
+        env:
+          AIRFLOW_HOME: /path/to/airflow
+          DAG_DIR: /path/to/dags
         run: |
           make deploy_dags
