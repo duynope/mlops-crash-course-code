@@ -49,7 +49,6 @@ jobs:
             ${{ runner.os }}-pip-
 
   build_and_push_image:
-    needs: setup_environment
     runs-on: ubuntu-latest
 
     steps:
@@ -62,14 +61,15 @@ jobs:
           username: duynope1803
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build Docker image
-        working-directory: data_pipeline/deployment # Chỉ định đúng thư mục chứa Dockerfile
+      - name: Build and Push Docker Image
+        working-directory: data_pipeline/deployment
         run: |
-          docker build -t duynope1803/data-pipeline:latest .
-
-      - name: Push Docker image to Docker Hub
-        run: |
-          docker push duynope1803/data-pipeline:latest
+          echo $DOCKER_PASSWORD | docker login -u duynope1803 --password-stdin
+          DOCKER_BUILDKIT=1 docker buildx build \
+            --platform linux/amd64 \
+            --tag duynope1803/data-pipeline:latest \
+            --push \
+            -f Dockerfile .
 
   deploy_training_pipeline:
     needs: build_and_push_image
