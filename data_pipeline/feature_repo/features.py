@@ -49,3 +49,4 @@ def driver_stats_stream(df: DataFrame):
         .withColumnRenamed("conv_percentage", "conv_rate")
         .withColumnRenamed("acc_percentage", "acc_rate")
     )
+#hii
