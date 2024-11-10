@@ -20,6 +20,7 @@ pipeline {
 
             steps {
                 echo 'Testing data pipeline..'
+                echo 'Testing data pipeline..'
             }
         }
 
