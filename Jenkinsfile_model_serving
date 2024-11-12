@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3.9'
-            args '--privileged'  // Cài đặt quyền ưu tiên nếu cần
-        }
-    }
+    agent any  // Sử dụng bất kỳ agent nào có sẵn trong Jenkins
 
     stages {
         stage('build model serving') {
@@ -12,8 +7,13 @@ pipeline {
 
             steps {
                 echo 'Building model serving..'
-                sh 'apt-get update && apt-get install -y make'  // Cài đặt make
-                sh 'cd model_serving && make build_image'
+                script {
+                    // Cài đặt make trong container Docker
+                    sh 'apt-get update && apt-get install -y make'
+
+                    // Chạy lệnh make build_image trong thư mục model_serving
+                    sh 'cd model_serving && make build_image'
+                }
             }
         }
 
@@ -31,7 +31,10 @@ pipeline {
                     when { changeset "model_serving/**" }
 
                     steps {
-                        sh 'cd model_serving && make deploy_dags'
+                        script {
+                            // Chạy lệnh make deploy_dags trong thư mục model_serving
+                            sh 'cd model_serving && make deploy_dags'
+                        }
                     }
                 }
 
@@ -39,7 +42,10 @@ pipeline {
                     when { changeset "model_serving/**" }
 
                     steps {
-                        sh 'cd model_serving && make compose_up'
+                        script {
+                            // Chạy lệnh make compose_up trong thư mục model_serving
+                            sh 'cd model_serving && make compose_up'
+                        }
                     }
                 }
             }
