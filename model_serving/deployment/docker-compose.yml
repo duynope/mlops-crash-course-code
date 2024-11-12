@@ -12,7 +12,7 @@ services:
       - "8172:8172" 
     environment:
       - MLFLOW_TRACKING_URI=http://mlflow-mlflow-1:5000 
-      - MONITORING_SERVICE_API=http://172.21.0.3:8309/iterate
+      - MONITORING_SERVICE_API=http://monitoring_service:8309/iterate
     networks:
       - mlflow_default
       - feast_default  

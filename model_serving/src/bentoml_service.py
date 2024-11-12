@@ -103,6 +103,7 @@ def inference(request: InferenceRequest, ctx: bentoml.Context) -> InferenceRespo
         Log().log.info(f"input_features: {input_features}")
 
         result = predict(input_features)
+        print(f"kết quả là : {result}")
         df["prediction"] = result
         best_idx = df["prediction"].argmax()
         best_driver_id = df["driver_id"].iloc[best_idx]
