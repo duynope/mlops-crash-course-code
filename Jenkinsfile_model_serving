@@ -11,7 +11,7 @@ pipeline {
                     // Cài đặt make trong container Docker
                     sh 'apt-get update && apt-get install -y make'
 
-                    // Chạy lệnh make build_image trong thư mục model_serving
+                    
                     sh 'cd model_serving && make build_image'
                 }
             }
@@ -32,7 +32,7 @@ pipeline {
 
                     steps {
                         script {
-                            // Chạy lệnh make deploy_dags trong thư mục model_serving
+                            // Chạy lệnh make deploy_dags trong thư mục 
                             sh 'cd model_serving && make deploy_dags'
                         }
                     }
