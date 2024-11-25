@@ -1,6 +1,18 @@
 # mlops-crash-course-code
 
+
+NOTE :
+### Environment Setup
+
+It is recommended to use a separate environment file for each configuration to avoid conflicts between different settings and dependencies. This approach helps ensure that each environment (e.g., development, testing, production) has its own isolated set of configurations and dependencies, making the setup cleaner, more manageable, and less prone to errors.
+
+By keeping each environment in its own file, you can easily switch between configurations without worrying about accidental changes affecting other environments.
+
+Example:
+    cd data_pipeline : conda create -n data_pipeline
+
 # Data pipeline
+
     cd ../stream_emitting
     bash deploy.sh start
     cd ../data_pipeline
@@ -113,3 +125,18 @@ Tested on OS:
 
 -   Ubuntu 20.04
 -   MacOS using M1, M2, Intel CPU
+
+
+
+---
+
+### Những điểm cần lưu ý:
+1. **Chú ý về đoạn `feast apply` và `feast materialize-incremental`**: Đảm bảo rằng bạn chỉ gọi các lệnh này trong các thư mục đúng, vì chúng liên quan đến việc áp dụng và cập nhật các features trong Feast.
+   
+2. **Sử dụng `conda create -n` đúng cách**: Đảm bảo rằng mọi người biết phải kích hoạt môi trường sau khi tạo, có thể thêm dòng lệnh `conda activate <env_name>` nếu cần.
+
+3. **Thông tin về các hệ điều hành đã kiểm tra**: Bạn đã liệt kê rất rõ ràng các hệ điều hành hỗ trợ, đảm bảo rằng người dùng biết về các hệ điều hành đã được kiểm tra.
+
+---
+
+Hy vọng các gợi ý trên có thể giúp bạn hoàn thiện file `README` của mình! 😊
