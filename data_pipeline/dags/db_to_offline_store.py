@@ -36,10 +36,5 @@ with DAG(
         **DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS,
         command="/bin/bash -c 'cd src/db_to_offline_store && python explore_and_validate.py'",
     )
-    hi = DockerOperator(
-        task_id="hi",
-        **DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS,
-        command="/bin/bash -c 'cd src/db_to_offline_store && python hi.py'",
-    )
 
-    ingest_task >> clean_task >> explore_and_validate_task >> hi
+    ingest_task >> clean_task >> explore_and_validate_task
