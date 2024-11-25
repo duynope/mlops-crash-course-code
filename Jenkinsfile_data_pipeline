@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    echo'xin chao'
+    
     stages {
         stage('build data pipeline') {
             when { changeset "data_pipeline/**" }
