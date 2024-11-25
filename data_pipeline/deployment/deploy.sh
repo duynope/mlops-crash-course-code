@@ -47,7 +47,7 @@ deploy_dags() {
     fi
 
     mkdir -p "$DAGS_DIR"
-    cp -r dags/* "$DAGS_DIR"   # Thêm -r để sao chép cả thư mục con (như __pycache__)
+    cp -r dags/* "$DAGS_DIR"   
 }
 
 

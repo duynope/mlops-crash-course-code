@@ -1,7 +1,7 @@
 FROM python:3.9-buster AS build
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends gcc  # Nếu cần biên dịch các package
+    apt-get install -y --no-install-recommends gcc 
 
 RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"

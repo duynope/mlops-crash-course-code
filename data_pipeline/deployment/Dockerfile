@@ -9,12 +9,6 @@ RUN pip install -r requirements.txt
 
 FROM python:3.9-slim
 
-# RUN apt-get update && \
-#   apt-get install -y --no-install-recommends \
-#     openjdk-11-jre-headless && \
-#   apt-get autoremove -yqq --purge && \
-#   apt-get clean && \
-#   rm -rf /var/lib/apt/lists/*
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     openjdk-17-jre-headless && \

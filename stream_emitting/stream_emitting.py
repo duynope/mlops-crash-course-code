@@ -15,7 +15,7 @@ stream_handler = logging.StreamHandler(sys.stdout)
 stream_handler.setFormatter(formatter)
 logger.addHandler(stream_handler)
 logger.setLevel(logging.INFO)
-
+    
 def main(args):
     for _ in range(20):
         try:

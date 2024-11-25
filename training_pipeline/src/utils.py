@@ -23,14 +23,11 @@ class AppConst:
 
 class AppPath:
     # set TRAINING_PIPELINE_DIR in dev environment for quickly testing the code
-    ROOT = Path(os.environ.get("TRAINING_PIPELINE_DIR", "training_pipeline"))
+    ROOT = Path(os.environ.get("TRAINING_PIPELINE_DIR", "/training_pipeline"))
     DATA = ROOT / "data"
     DATA_SOURCES = ROOT / "data_sources"
     FEATURE_REPO = ROOT / "feature_repo"
     ARTIFACTS = ROOT / "artifacts"
-
-    print(f"Feature Repo Path: {FEATURE_REPO}")  # Log đường dẫn FEATURE_REPO
-    print(f"Feature Repo Path: {DATA}")  # Log đường dẫn FEATURE_REPO
 
     TRAINING_PQ = ARTIFACTS / "training.parquet"
     TRAIN_X_PQ = ARTIFACTS / "train_x.parquet"

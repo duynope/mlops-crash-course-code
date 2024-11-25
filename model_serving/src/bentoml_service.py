@@ -114,8 +114,12 @@ def inference(request: InferenceRequest, ctx: bentoml.Context) -> InferenceRespo
         ctx.response.status_code = 200
 
         # Monitor
-        
-
+        #i like american most because it is a beautiful country with many interesting things
+        #no i haven't and i wish to visit 
+        #i like my bedroom most because it is the place where i can relax, sleep and do what i can
+        # no i see it no need change
+        #first, it is more interesting when all the members have a party in a class. we can organize some 
+        #interesting activities so that all of us can join in
         monitor_df = df.iloc[[best_idx]]
         monitor_df = monitor_df.assign(request_id=[request.request_id])
         monitor_df = monitor_df.assign(best_driver_id=[best_driver_id])
