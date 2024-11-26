@@ -1,0 +1,12 @@
+project: feast_demo
+provider: local
+registry:
+    path: registry/local_registry.db
+    cache_ttl_seconds: 5
+online_store:
+    type: redis
+    connection_string: feast-redis-1:6379
+offline_store:
+    type: file
+
+entity_key_serialization_version: 2
