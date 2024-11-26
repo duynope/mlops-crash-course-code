@@ -133,10 +133,8 @@ Tested on OS:
 ### Những điểm cần lưu ý:
 1. **Chú ý về đoạn `feast apply` và `feast materialize-incremental`**: Đảm bảo rằng bạn chỉ gọi các lệnh này trong các thư mục đúng, vì chúng liên quan đến việc áp dụng và cập nhật các features trong Feast.
    
-2. **Sử dụng `conda create -n` đúng cách**: Đảm bảo rằng mọi người biết phải kích hoạt môi trường sau khi tạo, có thể thêm dòng lệnh `conda activate <env_name>` nếu cần.
-
-3. **Thông tin về các hệ điều hành đã kiểm tra**: Bạn đã liệt kê rất rõ ràng các hệ điều hành hỗ trợ, đảm bảo rằng người dùng biết về các hệ điều hành đã được kiểm tra.
+2. **Sử dụng `conda create -n` đúng cách**: Đảm bảo rằng bạn phải kích hoạt môi trường sau khi tạo, dùng dòng lệnh `conda activate <env_name>` để kích hoạt môi trường.
 
 ---
 
-Hy vọng các gợi ý trên có thể giúp bạn hoàn thiện file `README` của mình! 😊
+Hy vọng các gợi ý trên có thể giúp bạn sử dụng được MLOps phattform này! 😊
