@@ -5,7 +5,7 @@ registry:
     cache_ttl_seconds: 5
 online_store:
     type: redis
-    connection_string: feast-redis-1:6379
+    connection_string: 172.17.0.1:6378
 offline_store:
     type: file
 
