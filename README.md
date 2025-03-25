@@ -126,15 +126,3 @@ Tested on OS:
 -   Ubuntu 20.04
 -   MacOS using M1, M2, Intel CPU
 
-
-
----
-
-### Những điểm cần lưu ý:
-1. **Chú ý về đoạn `feast apply` và `feast materialize-incremental`**: Đảm bảo rằng bạn chỉ gọi các lệnh này trong các thư mục đúng, vì chúng liên quan đến việc áp dụng và cập nhật các features trong Feast.
-   
-2. **Sử dụng `conda create -n` đúng cách**: Đảm bảo rằng bạn phải kích hoạt môi trường sau khi tạo, dùng dòng lệnh `conda activate <env_name>` để kích hoạt môi trường.
-
----
-
-Hy vọng các gợi ý trên có thể giúp bạn sử dụng được MLOps phattform này! 😊
